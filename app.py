@@ -9,9 +9,9 @@ app = Flask(__name__)
 def index():
     return render_template('login.html')
 
-@app.route('/register')
+@app.route('/register.html')
 def register():
     return render_template('register.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
