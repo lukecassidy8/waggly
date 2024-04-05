@@ -12,13 +12,20 @@
             <form id="registerForm">
                 <h2>Register</h2>
                 <input type="text" id="registerUsername" placeholder="Username" required>
-                <input type="email" id="registerEmail" placeholder="Email" required>
                 <input type="password" id="registerPassword" placeholder="Password" required>
+                <div>
+                    <input type="radio" id="dogWalker" name="userType" value="dogWalker" checked>
+                    <label class="radio-label" for="dogWalker">Dog Walker</label>
+                </div>
+                <div>
+                    <input type="radio" id="dogOwner" name="userType" value="dogOwner">
+                    <label class="radio-label" for="dogOwner">Dog Owner</label>
+                </div>
                 <button type="submit">Register</button>
             </form>
             <p>Already have an account? <a href="/">Login here</a></p>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="../static/bootstrap/js/register.js"></script>
 </body>
 </html>

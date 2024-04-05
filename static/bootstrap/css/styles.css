@@ -53,5 +53,8 @@ button:hover {
 h2 {
     margin-bottom: 10px;
 }
+.radio-label{
+    font-size: 14px;
+}
 
 /* Adjusting path for CSS file in Flask */
