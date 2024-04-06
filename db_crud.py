@@ -2,6 +2,7 @@ from azure.cosmos import CosmosClient, exceptions, PartitionKey
 import json
 import asyncio
 from os import getenv
+import logging
 
 uri = getenv('uri')
 key = getenv('key')
@@ -10,6 +11,7 @@ databaseName = 'users'
 database = client.get_database_client(databaseName)
 containerName = 'registry'
 container = database.get_container_client(containerName)
+logging.basicConfig(level=logging.INFO)
 
 #Create the database
 # try:
@@ -35,7 +37,8 @@ def insertUser(username, password, userType):
         }
         container.create_item(body=user_document)
 
-        print("User inserted successfully into Cosmos DB")
+        # print("User inserted successfully into Cosmos DB")
 
     except exceptions.CosmosHttpResponseError as e:
-        print(f"Error inserting user into Cosmos DB: {e}")
+        # print(f"Error inserting user into Cosmos DB: {e}")
+        logging.error('Error inserting into cosmosdb')
