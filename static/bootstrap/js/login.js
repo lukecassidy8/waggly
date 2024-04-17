@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('loginForm').addEventListener('submit', function (event) {
-        event.preventDefault();
+        event.preventDefault(); // Prevent the form from submitting normally
         const formData = new FormData(this);
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/login', true);
@@ -8,10 +8,12 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.onload = function () {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
-                if (response.user_type) {
-                    document.getElementById('userType').innerText = response.user_type;
+                if (response.success) {
+                    // Redirect user to dashboard if login is successful
+                    window.location.href = '/dashboard';
                 } else {
-                    alert(response.message);
+                    // Display error message to the user
+                    document.getElementById('responseMessage').innerText = response.message;
                 }
             } else {
                 alert('Request failed. Please try again later.');

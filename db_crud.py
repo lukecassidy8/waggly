@@ -6,15 +6,12 @@ import logging
 
 uri = getenv('uri')
 key = getenv('key')
-print (uri)
-print(key)
 client = CosmosClient(uri, credential=key)
 databaseName = 'users'
 database = client.get_database_client(databaseName)
 containerName = 'registry'
 container = database.get_container_client(containerName)
-logging.basicConfig(level=logging.INFO)
-
+logging.getLogger('azure').setLevel(logging.WARNING)
 #Create the database
 # try:
 #     database = client.create_database(databaseName)
