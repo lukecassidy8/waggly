@@ -12,6 +12,20 @@ def index():
 def register():
     return render_template('register.html')
 
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/login', methods=['POST'])
+def loginUser():
+    username = request.form['username']
+    password = request.form['password']
+
+    userType = db_crud.authenticateUser(username, password)
+    if userType is not None:
+        return jsonify({'success': True, 'userType': userType})
+    else:
+        return jsonify({'success': False, 'message': 'Invalid username or password'})
 
 @app.route('/register', methods=['POST'])
 def registerUser():

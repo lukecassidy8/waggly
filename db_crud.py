@@ -11,8 +11,7 @@ databaseName = 'users'
 database = client.get_database_client(databaseName)
 containerName = 'registry'
 container = database.get_container_client(containerName)
-logging.basicConfig(level=logging.INFO)
-
+logging.getLogger('azure').setLevel(logging.WARNING)
 #Create the database
 # try:
 #     database = client.create_database(databaseName)
@@ -36,9 +35,13 @@ def insertUser(username, password, userType):
             'userType': userType
         }
         container.create_item(body=user_document)
-
-        # print("User inserted successfully into Cosmos DB")
-
     except exceptions.CosmosHttpResponseError as e:
-        # print(f"Error inserting user into Cosmos DB: {e}")
         logging.error('Error inserting into cosmosdb')
+
+def authenticateUser(username, password):
+    loginQuery = f"SELECT * FROM c WHERE c.username = '{username}' AND c.password = '{password}'"
+    items = list(container.query_items(query=loginQuery, enable_cross_partition_query=True))
+    if items:
+        return items[0]['userType']
+    else:
+        return None
