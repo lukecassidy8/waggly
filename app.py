@@ -50,22 +50,22 @@ def getUserType():
 
 @app.route('/login', methods=['POST'])
 def loginUser():
-    # logging.debug('Received login request')
-    # logging.debug('Form data: %s', request.form)
+    logging.debug('Received login request')
+    logging.debug('Form data: %s', request.form)
     username = request.form['username']
     password = request.form['password']
-    # logging.debug('Username: %s', username)
-    # logging.debug('Password: %s', password)
+    logging.debug('Username: %s', username)
+    logging.debug('Password: %s', password)
 
     userType = db_crud.authenticateUser(username, password)
     if userType is not None:
         session['username'] = username
         session['userType'] = userType
 
-        # logging.info('User logged in successfully')
+        logging.info('User logged in successfully')
         return jsonify({'success': True, 'userType': userType})
     else:
-        # logging.warning('Invalid username or password')
+        logging.warning('Invalid username or password')
         return jsonify({'success': False, 'message': 'Invalid username or password'})
 
 @app.route('/register', methods=['POST'])

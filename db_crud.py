@@ -1,6 +1,4 @@
 from azure.cosmos import CosmosClient, exceptions, PartitionKey
-import json
-import asyncio
 from os import getenv
 import logging
 import random
@@ -43,16 +41,11 @@ def insertUser(username, password, userType):
 
 
 def authenticateUser(username, password):
-    # Log the credentials being checked
     logging.debug("db_crud.py: Checking credentials for username: %s", username)
-
-    # Construct the query to check username and password
     loginQuery = f"SELECT * FROM c WHERE c.username = '{username}' AND c.password = '{password}'"
 
-    # Query the database
     items = list(container.query_items(query=loginQuery, enable_cross_partition_query=True))
 
-    # If credentials are valid, retrieve the user type
     if items:
         logging.debug("db_crud.py: Item retrieved from the database: %s", items[0])
         logging.debug("db_crud.py: Retrieving user type for username: %s", username)
