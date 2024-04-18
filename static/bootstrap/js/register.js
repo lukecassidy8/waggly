@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             console.log('Registration successful:', data);
+            document.getElementById('registrationStatus').style.display = 'block';
         })
         .catch(error => {
             console.error('Error during registration:', error);

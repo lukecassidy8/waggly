@@ -1,8 +1,7 @@
 from azure.cosmos import CosmosClient, exceptions, PartitionKey
-import json
-import asyncio
 from os import getenv
 import logging
+import random
 
 uri = getenv('uri')
 key = getenv('key')
@@ -34,14 +33,36 @@ def insertUser(username, password, userType):
             'password': password,
             'userType': userType
         }
+        if userType == 'dogOwner':
+            user_document['dogsOwned'] = random.randint(1,5)
         container.create_item(body=user_document)
     except exceptions.CosmosHttpResponseError as e:
         logging.error('Error inserting into cosmosdb')
 
+
 def authenticateUser(username, password):
+    logging.debug("db_crud.py: Checking credentials for username: %s", username)
     loginQuery = f"SELECT * FROM c WHERE c.username = '{username}' AND c.password = '{password}'"
+
     items = list(container.query_items(query=loginQuery, enable_cross_partition_query=True))
+
     if items:
-        return items[0]['userType']
+        logging.debug("db_crud.py: Item retrieved from the database: %s", items[0])
+        logging.debug("db_crud.py: Retrieving user type for username: %s", username)
+        user_type = items[0].get('userType')
+        logging.debug("db_crud.py: User type retrieved: %s", user_type)
+        return user_type
     else:
+        return None
+
+def getNumberOfDogs(username):
+    try:       
+        getDogsQuery = f"SELECT c.dogsOwned FROM c WHERE c.username = '{username}'"
+        items = list(container.query_items(query=getDogsQuery, enable_cross_partition_query=True))
+        if items:
+            return items[0].get('dogsOwned')
+        else:
+            return None
+    except Exception as e:
+        logging.error(f"Erorr getting number of dogs for user {username}: {str(e)}")
         return None

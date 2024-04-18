@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="../static/bootstrap/css/styles.css">
+    <link rel="stylesheet" href="../static/bootstrap/css/dashboard.css">
+    <script src="../static/bootstrap/js/dashboard.js"></script>
 </head>
 <body>
     <div class="container">
-        <h2>Welcome to the Dashboard</h2>
-        <p>User Type: <span id="userType"></span></p>
-        <a href="/">Logout</a>
+        <div class="header">
+            <h2 class="title">Welcome to the Waqq.ly Dashboard</h2>
+            <div class="user-info">
+                <a href="/" id="logoutBtn" class="btn">Logout</a>
+            </div>
+        </div>
+        <div class="content">
+            <p class="user-type">User Type: <span id="userType"></span></p>
+            <p class="number-of-dogs" id="numberOfDogs">Number of Dogs: <span id="dogCount"></span></p>
+            <p></p>
+        </div>
     </div>
 </body>
 </html>
